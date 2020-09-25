@@ -25,11 +25,8 @@ import {
   FormGroup,
   Label,
 } from "reactstrap";
-import Logo from "../../../assets/img/svg/LOGO.svg";
 import { clientsRegistration } from "../../../actions/accountAction";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
-import Footer from "../HomeComponent/Footer";
-// import { isBackOfficeUser } from "../../../utils";
 
 class Register extends Component {
   constructor(props) {
@@ -47,14 +44,13 @@ class Register extends Component {
         loading: false,
       });
       showSuccess(this.props.t("Registration.CONFIRMATION_CODE"));
-      // this.props.history.push("/frontOffice/login");
+
       this.props.history.push("/frontOffice/activate-account");
     }
     if (
       nextProps.registerErrorStatus &&
       nextProps.registerErrorStatus !== this.props.registerErrorStatus
     ) {
-      // console.log(console.log(nextProps.networkErrorStatus));
       showError(nextProps.registerErrorStatus);
       this.setState({
         loading: false,
@@ -65,7 +61,6 @@ class Register extends Component {
       nextProps.registerNetworkErrorStatus !==
         this.props.registerNetworkErrorStatus
     ) {
-      // console.log(console.log(nextProps.networkErrorStatus));
       showError(this.props.t("Common.SOMETHING_WENT_WRONG"));
       this.setState({
         loading: false,
@@ -74,7 +69,6 @@ class Register extends Component {
   };
 
   onSubmit = (formProps) => {
-    console.log(formProps);
     if (
       formProps.firstName &&
       formProps.lastName &&
@@ -92,7 +86,6 @@ class Register extends Component {
           password: formProps.password,
           city: formProps.city,
           title: formProps.title,
-          // isBackOfficeUser: isBackOfficeUser
         };
         this.props.dispatch(clientsRegistration(formData));
 
@@ -115,7 +108,6 @@ class Register extends Component {
     this.props.dispatch(change("RegisterForm", "confirm_password", null));
   };
   render() {
-    // console.log(isBackOfficeUser);
     const { handleSubmit } = this.props;
     const Checkbox = ({ input, meta: { touched, error } }) => (
       <div style={{ border: touched && error ? "1px solid red" : "none" }}>
@@ -144,21 +136,7 @@ class Register extends Component {
               <Col md={8} className="mx-auto">
                 <Card className="main-card mb-3  mt-5">
                   <CardBody>
-                    <div className="text-center p-2">
-                      {/* <a
-                        href="javascript:void(0);"
-                        onClick={(e) =>
-                          this.props.history.push("/frontOffice/home")
-                        }
-                      >
-                        <img
-                          src={Logo}
-                          alt="logo"
-                          className="img-fluid"
-                          width="15%"
-                        />
-                      </a> */}
-                    </div>
+                    <div className="text-center p-2"></div>
                     <AvForm
                       className="px-5"
                       noValidate
@@ -174,7 +152,6 @@ class Register extends Component {
                               component={renderSelectField}
                               label={this.props.t("Registration.TITLE")}
                               required
-                              // validate={[required]}
                               className="form-control"
                             >
                               <option value="">
@@ -190,21 +167,6 @@ class Register extends Component {
                                 {this.props.t("Registration.MRS")}
                               </option>
                             </Field>
-                            {/* <AvField
-                            type="select"
-                            id="title"
-                            // tag={Field}
-                            component={renderSelectField}
-                            name="title"
-                            helpMessage=""
-                            required
-                          >
-                            <option value="">Select Frequency of Salary</option>
-                            <option value="1">Monthly</option>
-                            <option value="2">Bi-Weekly</option>
-                            <option value="3">Weekly</option>
-                            <option value="4">Fortnightly</option>{" "}
-                          </AvField> */}
                           </FormGroup>
                           <FormGroup>
                             <AvField
@@ -220,10 +182,7 @@ class Register extends Component {
                                     "ErrorMsg.FIRST_NAME_ERROR"
                                   ),
                                 },
-                                // pattern: {
-                                //   value: "^[a-zA-Z]+$",
-                                //   errorMessage: this.props.t("Common.ONLY_TEXT")
-                                // },
+
                                 maxLength: {
                                   value: 20,
                                 },
@@ -251,10 +210,7 @@ class Register extends Component {
                                     "ErrorMsg.LAST_NAME_ERROR"
                                   ),
                                 },
-                                // pattern: {
-                                //   value: "^[a-zA-Z]+$",
-                                //   errorMessage: this.props.t("Common.ONLY_TEXT")
-                                // },
+
                                 maxLength: {
                                   value: 20,
                                 },
@@ -390,7 +346,6 @@ class Register extends Component {
                               name="terms"
                               component={Checkbox}
                             />
-                            {/* </AvCheckboxGroup> */}
                           </FormGroup>
                         </Col>
                       </Row>
@@ -423,7 +378,6 @@ class Register extends Component {
             </Row>
           </Container>
         </ReactCSSTransitionGroup>
-        {/* <Footer /> */}
       </Fragment>
     );
   }
@@ -435,7 +389,6 @@ Register = reduxForm({
   // asyncValidate,
 })(Register);
 function mapStateToProps(state) {
-  console.log(state.Account.registerErrorStatus);
   return {
     registerSuccess: state.Account.registerSuccess,
     registerErrorStatus: state.Account.registerErrorStatus,

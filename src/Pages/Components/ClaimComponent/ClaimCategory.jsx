@@ -1,5 +1,4 @@
 import React, { Fragment } from "react";
-import classnames from "classnames";
 import { translate } from "react-multi-lang";
 import { connect } from "react-redux";
 import compose from "compose-function";
@@ -61,7 +60,7 @@ class ClaimCategory extends React.Component {
     if (
       nextProps.subCategoryDataByCategory &&
       nextProps.subCategoryDataByCategory !==
-      this.props.subCategoryDataByCategory
+        this.props.subCategoryDataByCategory
     ) {
       this.setState({
         subCategoryDataByCategory: nextProps.subCategoryDataByCategory,
@@ -71,7 +70,7 @@ class ClaimCategory extends React.Component {
     if (
       nextProps.subSubCategoryDataBySubCategory &&
       nextProps.subSubCategoryDataBySubCategory !==
-      this.props.subSubCategoryDataBySubCategory
+        this.props.subSubCategoryDataBySubCategory
     ) {
       this.setState({
         subSubCategoryDataBySubCategory:
@@ -101,7 +100,6 @@ class ClaimCategory extends React.Component {
       nextProps.addClaimData &&
       nextProps.addClaimData !== this.props.addClaimData
     ) {
-
       this.setState({
         loading: false,
       });
@@ -126,7 +124,7 @@ class ClaimCategory extends React.Component {
     if (
       nextProps.subCategoryDataByCategoryError &&
       nextProps.subCategoryDataByCategoryError !==
-      this.props.subCategoryDataByCategoryError
+        this.props.subCategoryDataByCategoryError
     ) {
       // showError(this.props.t("ErrorMsg.NO_SUB_CATEGORY"));
       this.setState({
@@ -137,7 +135,6 @@ class ClaimCategory extends React.Component {
       nextProps.subSubCategoryError &&
       nextProps.subSubCategoryError !== this.props.subSubCategoryError
     ) {
-      // showError(this.props.t("ErrorMsg.NO_SUB_SUB_CATEGORY"));
       this.setState({
         loading: false,
       });
@@ -146,7 +143,6 @@ class ClaimCategory extends React.Component {
 
   /*common function to show categories */
   showOptions = (data) => {
-    // console.log(data);
     if (data && data.length) {
       return data.map((categories, key) => {
         return (
@@ -159,15 +155,13 @@ class ClaimCategory extends React.Component {
   };
   // get sub category by categoryID
   getSubCategoriesByCategory = (e) => {
-    // console.log(e.target.value);
     if (e.target.value !== "0") {
-      // console.log(this.state.getCategoriesData);
       const category = _.find(this.state.getCategoriesData.categoryClients, {
         code: e.target.value,
       });
-      // console.log(category);
+
       this.setState({ showSubSubCategory: category.isRequiredSubSubCategory });
-      // console.log(category);
+
       this.props.dispatch(getSubCategories(e.target.value));
     } else {
       this.setState({
@@ -178,7 +172,6 @@ class ClaimCategory extends React.Component {
   //get Sub Sub-Category BY SubCategoryID
   getSubSubCategoryBYSubCategory = (e) => {
     this.props.dispatch(getSubSubCategories(e.target.value));
-    // console.log(e.target.value);
   };
   handleClick = () => {
     this.refs.fileInput.click();
@@ -208,9 +201,9 @@ class ClaimCategory extends React.Component {
       formProps.objectOfClaim
     ) {
       const trainDetails = JSON.parse(localStorage.getItem("trainDetails"));
-      // const userDetails = JSON.parse(localStorage.getItem("foUserDetails"));
+
       const userProfile = JSON.parse(localStorage.getItem("foUserProfile"));
-      // console.log(trainDetails);
+
       this.setState({ loading: true });
       const claimData = {
         departureStationCode: trainDetails.departureStation,
@@ -232,16 +225,12 @@ class ClaimCategory extends React.Component {
         // userFullName: userDetails.data.userName,
         userCode: userProfile.data.codeClient,
       };
-      // console.log(formProps.subSubCategory);
+
       if (formProps.subSubCategory) {
         claimData.subSubCategoryCode = formProps.subSubCategory;
       }
-      // console.log(claimData);
 
-      // console.log(claimData);
-      //localStorage.setItem("claimData", JSON.stringify(claimData));
       this.props.dispatch(addClaim(claimData, this.formValue));
-
     } else {
       showError(this.props.t("ErrorMsg.TEXT_ONLY"));
       this.setState({ loading: false });
@@ -255,7 +244,7 @@ class ClaimCategory extends React.Component {
         <label>{this.props.t("Common.IS_ONCF_USER")}</label>
       </div>
     );
-    // console.log(this.state.getCategoriesData);
+
     return (
       <Fragment>
         <MainLoader className="text-center" loading={this.state.mainLoader} />
@@ -319,9 +308,9 @@ class ClaimCategory extends React.Component {
                                 {this.showOptions(
                                   this.state.getCategoriesData
                                     ? getLangBasedItems(
-                                      this.state.getCategoriesData
-                                        .categoryClients
-                                    )
+                                        this.state.getCategoriesData
+                                          .categoryClients
+                                      )
                                     : null
                                 )}
                               </Field>
@@ -347,9 +336,9 @@ class ClaimCategory extends React.Component {
                                 {this.showOptions(
                                   this.state.subCategoryDataByCategory
                                     ? getLangBasedItems(
-                                      this.state.subCategoryDataByCategory
-                                        .subCategoryClients
-                                    )
+                                        this.state.subCategoryDataByCategory
+                                          .subCategoryClients
+                                      )
                                     : null
                                 )}
                               </Field>
@@ -374,10 +363,10 @@ class ClaimCategory extends React.Component {
                                   {this.showOptions(
                                     this.state.subSubCategoryDataBySubCategory
                                       ? getLangBasedItems(
-                                        this.state
-                                          .subSubCategoryDataBySubCategory
-                                          .subSubCategoryClients
-                                      )
+                                          this.state
+                                            .subSubCategoryDataBySubCategory
+                                            .subSubCategoryClients
+                                        )
                                       : ""
                                   )}
                                 </Field>
@@ -480,7 +469,6 @@ ClaimCategory = reduxForm({
   form: "mainForm",
 })(ClaimCategory);
 function mapStateToProps(state) {
-  // console.log(state.Category.getCategoriesData);
   return {
     getCategoriesData: state.Category.getCategoriesData,
     subCategoryDataByCategory: state.SubCategory.subCategoryDataByCategory,

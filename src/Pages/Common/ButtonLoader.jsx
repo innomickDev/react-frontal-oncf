@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import Button from "reactstrap-button-loader";
 
 export default function SubmitBtnLoader(props) {
-  // console.log(props.submitting);
+
   return (
     <Button
       type={props.type}

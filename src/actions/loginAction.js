@@ -3,7 +3,6 @@ import { DEV_ENV_URL } from "../Pages/Helpers/utils";
 import {
   AXIOS_INSTANCE,
   LOGIN_API,
-  CONFIG,
   LOGIN_CONFIG,
 } from "./apiEndPoints";
 import { checkHttpStatus, parseJSON, handleLoginRedirect } from "../utils";
@@ -51,16 +50,6 @@ export function userLogin(formData) {
           );
         }
       })
-      // .catch((error) => {
-      //   checkHttpStatus(error.response);
-      //   dispatch(
-      //     base.getFailure(AUTH_CONST.LOGIN_FAILURE, {
-      //       error: {
-      //         data: error.response ? error.response.data : null,
-      //       },
-      //     })
-      //   );
-      // });
       .catch((error) => {
         dispatch(base.handleCatch(AUTH_CONST.LOGIN_FAILURE, error));
       });

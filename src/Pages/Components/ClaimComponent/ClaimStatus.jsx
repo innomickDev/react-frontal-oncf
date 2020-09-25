@@ -7,16 +7,13 @@ import { withRouter } from "react-router-dom";
 import {
   dateTimeFormat,
   simpleDateFormat,
-  dateTimeUtcFormat,
-  getLangBasedItem,
   getLangBasedDataLabel,
   getLangBasedStationLabel,
   getFileExtension,
   getTarifLabel,
-  dateFormat,
 } from "../../Helpers/utils";
 
-import { reduxForm, Field } from "redux-form";
+import { reduxForm } from "redux-form";
 import {
   Button,
   Card,
@@ -26,20 +23,14 @@ import {
   Container,
   Collapse,
   CardHeader,
-  FormGroup,
-  FormText,
 } from "reactstrap";
 import {
   getMyClaims,
   getTicketAttachment,
   getClaimAttachment,
-  updateTicketAttachment,
 } from "../../../actions/claimAction";
 import { showSuccess, showError, getBase64 } from "../../Helpers/utils";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
-import Footer from "../HomeComponent/Footer";
-import ReactHtmlParser from "react-html-parser";
-import SubmitBtnLoader from "../../Common/ButtonLoader";
 
 // import PrintModal from "./PrintModal";
 class ClaimStatus extends Component {
@@ -95,8 +86,6 @@ class ClaimStatus extends Component {
       nextProps.claimDataError &&
       nextProps.claimDataError !== this.props.claimDataError
     ) {
-      // console.log(nextProps.claimDataError);
-      // showError(this.props.t("Common.NO_CLAIMS"));
       this.setState({
         noDataFound: false,
         noClaims: true,
@@ -127,7 +116,6 @@ class ClaimStatus extends Component {
       nextProps.ClaimAttachmentData &&
       nextProps.ClaimAttachmentData !== this.props.ClaimAttachmentData
     ) {
-      // console.log(nextProps.ClaimAttachmentData.attachment.length > 0);
       this.setState({
         ClaimAttachmentData: nextProps.ClaimAttachmentData.attachment
           ? getFileExtension(
@@ -177,7 +165,6 @@ class ClaimStatus extends Component {
       isRequest: nextProps.isRequest,
     });
   };
- 
 
   toggle = () => {
     this.setState({ collapse: !this.state.collapse });
@@ -227,12 +214,10 @@ class ClaimStatus extends Component {
   };
 
   updateClaim = (code) => {
-    // console.log(code);
     this.props.history.push(`/frontOffice/update-claim?code=${code}`);
   };
 
   callClaimAttachment = (code) => {
-    // console.log(code);
     this.props.dispatch(getClaimAttachment(code));
   };
   // claim communication
@@ -248,7 +233,6 @@ class ClaimStatus extends Component {
             </span>
             <span>
               <strong>{this.props.t("ClaimStatus.SENT_MESSAGE")}</strong>:
-              {/* {data ? data.sentMessage : ""} */}
               <div
                 dangerouslySetInnerHTML={{
                   __html: data ? data.sentMessage : "",
@@ -288,7 +272,6 @@ class ClaimStatus extends Component {
   /*fucntion for show my claims data */
   showMyClaims = () => {
     return this.state.myClaimsData.map((claimData, key) => {
-      // claimData.claimStatus = "4"; //todo
       return (
         <Card className="mb-1" id={`printCard${key}`}>
           <Container id="headingOne" className="pt-2">
@@ -401,8 +384,7 @@ class ClaimStatus extends Component {
                         {this.props.t("ClaimStatus.SUB_SUB_CATEGORY")}
                       </strong>
                       :{" "}
-                      {claimData.subSubCategoryCode &&
-                      claimData.subSubCategoryCode
+                      {claimData.subSubCategoryCode
                         ? getLangBasedDataLabel(claimData.subSubCategory)
                         : "none"}
                     </span>
@@ -522,9 +504,7 @@ class ClaimStatus extends Component {
                         <br />
                         <span>
                           <strong>{this.props.t("ClaimStatus.TARIF")}: </strong>
-                          {claimData && claimData
-                            ? getTarifLabel(claimData.tarif)
-                            : "none"}
+                          {claimData ? getTarifLabel(claimData.tarif) : "none"}
                         </span>
                         <br />
                         <span>
@@ -578,16 +558,6 @@ class ClaimStatus extends Component {
                         )}
                         <br />
 
-                        {/* {!claimData.isAnswered && (
-                          <a
-                            href="javscript:void(0)"
-                            onClick={() => this.showAttchmentButton(key)}
-                          >
-                            <i class="fas fa-edit"></i>{" "}
-                            {this.props.t("Common.MODIFY")}
-                          </a>
-                        )} */}
-                        {/* // eslint-disable-next-line jsx-a11y/anchor-has-content */}
                         <a
                           id="linkId"
                           href={
@@ -605,8 +575,6 @@ class ClaimStatus extends Component {
                   <Col md={12}>
                     <Button
                       className="btn btn-primary mt-2"
-                      // onClick={() => this.togglePrintModal(claimData)}
-                      // onClick={() => this.printDocument(key)}
                       onClick={() => this.navigateCalimData(claimData)}
                     >
                       <i className="fas fa-print"></i>{" "}
@@ -625,7 +593,6 @@ class ClaimStatus extends Component {
                   </Col>
                 </Row>
 
-                {/* CLAIM COOMUNICATION */}
                 <br />
                 <Row>
                   {" "}
@@ -648,18 +615,8 @@ class ClaimStatus extends Component {
   };
 
   render() {
-    // console.log(this.state.accordion);
-    // console.log(this.state.myClaimsData);
     return (
       <Fragment>
-        
-        {/* {this.state.openPrintModal && (
-          <PrintModal
-            modal={this.state.openPrintModal}
-            toggle={this.togglePrintModal}
-            claimData={this.state.claimData}
-          />
-        )} */}
         <ReactCSSTransitionGroup
           component="div"
           transitionName="TabsAnimation"
@@ -674,16 +631,6 @@ class ClaimStatus extends Component {
                 <Card className="main-card my-1 claim-card-status card-shadow">
                   <CardHeader className="c-header">
                     <Row className="text-center w-100 text-light">
-                      {/* <Col md={4} className="">
-                        <i
-                          className="float-left fas fa-arrow-circle-left fa-2x py-3"
-                          title="Back"
-                          onClick={(e) =>
-                            this.props.history.push("/frontOffice/claim")
-                          }
-                        ></i>
-                        &nbsp;
-                      </Col> */}
                       <Col md={12}>
                         <h5 className=" text-canter py-3  font-weight-bold rounded">
                           {this.props.t("ClaimStatus.SUBMITTED_CLAIM")}
@@ -719,8 +666,6 @@ class ClaimStatus extends Component {
             </Row>
           </Container>
         </ReactCSSTransitionGroup>
-        {/* <div className="footer-fix"> */}
-        {/* </div> */}
       </Fragment>
     );
   }
@@ -730,7 +675,6 @@ ClaimStatus = reduxForm({
   form: "mainForm",
 })(ClaimStatus);
 function mapStateToProps(state) {
-  // console.log(state.Claim.myClaimsData);
   return {
     myClaimsData: state.Claim.myClaimsData,
     claimDataError: state.Claim.claimDataError,

@@ -1,9 +1,8 @@
-import React, { Fragment, Component } from "react";
+import React, { Fragment } from "react";
 import { translate } from "react-multi-lang";
-import { connect } from "react-redux";
 import compose from "compose-function";
 import { withRouter } from "react-router-dom";
-import { Button, Row, Col, Label, Card, CardBody, Container } from "reactstrap";
+import { Row, Col, Card, CardBody, Container } from "reactstrap";
 
 class TermsCondition extends React.Component {
   constructor(props) {

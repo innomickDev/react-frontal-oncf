@@ -5,7 +5,6 @@ import {
   Card,
   CardBody,
   Col,
-  Button,
   FormGroup,
 } from "reactstrap";
 import { reduxForm, Field } from "redux-form";
@@ -18,7 +17,6 @@ import { AvForm, AvField } from "availity-reactstrap-validation";
 import { renderTextField } from "../../Common/RenderTextField";
 import Logo from "../../../assets/img/svg/LOGO.svg";
 import SubmitBtnLoader from "../../Common/ButtonLoader";
-import FooterComponent from "../HomeComponent/Footer";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 import { showSuccess, showError } from "../../Helpers/utils";
 const emailRex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -35,7 +33,6 @@ class ActivateAccount extends Component {
 
   componentWillMount = () => {
     const userProfile = JSON.parse(localStorage.getItem("foAuthToken"));
-    console.log(userProfile)
       if(userProfile){
         this.props.history.push("/frontOffice/login")
       }
@@ -56,38 +53,6 @@ class ActivateAccount extends Component {
       showSuccess(this.props.t("Common.ACTIVATION_SUCCESS"));
       this.props.history.push("/frontOffice/login");
     }
-    // if (
-    //   nextProps.isAuthenticated &&
-    //   nextProps.isAuthenticated !== this.props.isAuthenticated
-    // ) {
-    //   this.setState({
-    //     isShowLoader: false,
-    //     errorText: null,
-    //     isShowError: false,
-    //     loading: false
-    //   });
-    //   if (nextProps.loginData.IsTempPassword) {
-    //     this.props.history.push("/frontOffice/change-password");
-    //   } else {
-    //     setTimeout(
-    //       function() {
-    //         this.props.history.push("/frontOffice/home");
-    //       }.bind(this),
-    //       1000
-    //     );
-    //   }
-    //   this.props.dispatch(myProfile());
-    // }
-    // if (
-    //   nextProps.loginErrorStatus &&
-    //   nextProps.loginErrorStatus !== this.props.loginErrorStatus
-    // ) {
-    //   this.setState({ isAuthenticating: false });
-    //   showError(nextProps.loginErrorStatus);
-    //   this.setState({
-    //     loading: false
-    //   });
-    // }
   };
 
 // Validating code
@@ -115,18 +80,12 @@ class ActivateAccount extends Component {
     }
   };
   onSubmit = (formProps) => {
-    console.log(formProps);
     if (this.state.emailValidation && this.state.validateConfirmCode) {
       this.props.dispatch(activateAccount(formProps));
       this.setState({
         loading: true,
       });
     }
-    // else {
-    //   showError(this.props.t(
-    //     "Common.REQUIRED_FIELDS"
-    //   ))
-    // }
   };
   // Render function
   render() {

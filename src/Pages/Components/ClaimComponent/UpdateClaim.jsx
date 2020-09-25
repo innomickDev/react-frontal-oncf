@@ -4,10 +4,6 @@ import { translate } from "react-multi-lang";
 import { connect } from "react-redux";
 import compose from "compose-function";
 import { withRouter } from "react-router-dom";
-import {
-  renderTextField,
-  renderSelectField,
-} from "../../Common/RenderTextField";
 import { AvForm, AvField } from "availity-reactstrap-validation";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 import {
@@ -18,7 +14,6 @@ import {
   CardHeader,
   FormGroup,
   Label,
-  Button,
 } from "reactstrap";
 
 import {
@@ -27,15 +22,7 @@ import {
   updateClaimAttachment,
   updateClaim,
 } from "../../../actions/claimAction";
-import {
-  getBase64,
-  showError,
-  getLangBasedStations,
-  PHONE_REGEX,
-  getLangBasedItems,
-  showSuccess,
-} from "../../Helpers/utils";
-import Footer from "../HomeComponent/Footer";
+import { getBase64, showError, showSuccess } from "../../Helpers/utils";
 import MainLoader from "../../Common/Loader";
 import qString from "query-string";
 import SubmitBtnLoader from "../../Common/ButtonLoader";
@@ -52,8 +39,6 @@ class UpdateClaimComponent extends Component {
   componentDidMount = () => {
     const params = qString.parse(this.props.location.search);
     this.props.dispatch(getClaimsDetailsById(params.code));
-
-    // this.props.initilize({ claimDetails: "hello " });
   };
   componentWillReceiveProps = (nextProps) => {
     if (
@@ -84,24 +69,6 @@ class UpdateClaimComponent extends Component {
       showError(nextProps.updateClaimFail);
       this.setState({ loading: false });
     }
-    // ticket update
-    // if (
-    //   nextProps.updateTicketAttachmentData &&
-    //   nextProps.updateTicketAttachmentData !==
-    //     this.props.updateTicketAttachmentData
-    // ) {
-    //   showSuccess(this.props.t("Common.UPLOAD_SUCCESS"));
-    //   this.setState({ loading: false });
-    // }
-    // Claim update
-    // if (
-    //   nextProps.updateClaimAttachmentData &&
-    //   nextProps.updateClaimAttachmentData !==
-    //     this.props.updateClaimAttachmentData
-    // ) {
-    //   showSuccess(this.props.t("Common.UPLOAD_SUCCESS"));
-    //   this.setState({ loading: false });
-    // }
 
     // ticket update
     if (
@@ -167,17 +134,14 @@ class UpdateClaimComponent extends Component {
   };
 
   onSubmit = (formProps) => {
-    console.log(formProps);
     const params = qString.parse(this.props.location.search);
     const requestData = {
       code: params.code ? parseInt(params.code) : "",
       claimDetails: formProps.claimDetails,
     };
-    console.log(requestData);
+
     // claimDetails update
     if (this.props.initialValues) {
-      console.log(formProps);
-      console.log(this.props.initialValues, formProps);
       this.props.dispatch(updateClaim(requestData));
     }
 
@@ -191,7 +155,6 @@ class UpdateClaimComponent extends Component {
     if (this.state.currentTicketPath) {
       this.props.dispatch(updateTicketAttachment(ticketUpdateRequest));
     }
-    console.log(ticketUpdateRequest);
 
     // claim update
     const claimUpdateRequest = {
@@ -203,14 +166,12 @@ class UpdateClaimComponent extends Component {
     if (this.state.currentClaimPath) {
       this.props.dispatch(updateClaimAttachment(claimUpdateRequest));
     }
-    console.log(claimUpdateRequest);
+
     // loader button
     this.setState({ loading: true });
   };
 
   render() {
-    console.log(this.state.initialValues);
-    console.log(this.props);
     const { handleSubmit } = this.props;
     return (
       <Fragment>
@@ -360,7 +321,6 @@ UpdateClaimComponent = reduxForm({
   // enableReinitialize: true,
 })(UpdateClaimComponent);
 function mapStateToProps(state) {
-  // console.log(state.Claim.getClaimsDataById);
   return {
     initialValues: state.Claim.getClaimsDataById,
     getClaimsDataById: state.Claim.getClaimsDataById,

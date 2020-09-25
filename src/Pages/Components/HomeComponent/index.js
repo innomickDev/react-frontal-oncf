@@ -1,8 +1,8 @@
 import React, { Fragment, Component } from "react";
 import { Container, Row, Col, Card, Button } from "reactstrap";
-import CardImg from "../../../assets/img/Al-boraq-1.png";
+
 import { translate } from "react-multi-lang";
-import FooterComponent from "./Footer";
+
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 // hit
 import ObjectOne from "../../../assets/img/g1.png";
@@ -101,7 +101,6 @@ class HomeComponent extends Component {
                 <Col md={11} className="mx-auto">
                   <Card className=" b-card right-sudo  card-shadow card-border">
                     <div className="c-mt mb-5 txt-rtl">
-                      {/* <p>{this.props.t("Home.PROCESS_TEXT")}</p> */}
                       <Row>
                         <Col md={{ size: 3, offset: 1 }}>
                           <img
@@ -338,14 +337,6 @@ class HomeComponent extends Component {
           <Element name="oncfFigure">
             <Container fluid className="bg-box mt-3 " id="section5">
               <Row className="py-2" id="claim-process">
-                {/* <Col md={6} className="mx-auto box-rl">
-                  <div className="text-center ">
-                    <h6 className="text-light c-bg p-3 m-2 font-weight-bold border-xy">
-                      {this.props.t("Home.HOW_IT_WORKS")} :
-                    </h6>
-                  </div>
-                </Col> */}
-
                 <Col md={11} className="mx-auto ">
                   <div className="stats-bg mb-3">
                     <Row>
@@ -486,9 +477,6 @@ class HomeComponent extends Component {
                         </Col>
                         <Col md={8}>
                           <div className="p-5 rm-p-mobile">
-                            {/* <p className="">
-                              {this.props.t("Home.LOST_OBJECTS_PARA")}
-                            </p> */}
                             <ul className="list-unstyled mt-5">
                               <li>{this.props.t("Home.LOST_OBJECTS_PARA")}</li>
                               <li className="mt-5">

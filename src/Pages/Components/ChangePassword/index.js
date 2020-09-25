@@ -1,13 +1,5 @@
 import React, { Fragment, Component } from "react";
-import {
-  Container,
-  Row,
-  Card,
-  CardBody,
-  Col,
-  Button,
-  FormGroup,
-} from "reactstrap";
+import { Container, Row, Card, CardBody, Col, FormGroup } from "reactstrap";
 import { reduxForm, Field } from "redux-form";
 import { translate } from "react-multi-lang";
 import { connect } from "react-redux";
@@ -37,7 +29,6 @@ class ChangePassword extends Component {
     this.isBackOffice = queryString.parse(
       this.props.location.search
     ).isBackOffice;
-    //console.log(urlParams);
   };
 
   componentWillReceiveProps = (nextProps, props) => {
@@ -57,7 +48,7 @@ class ChangePassword extends Component {
       nextProps.errorStatus !== this.props.errorStatus
     ) {
       // showError(this.props.t("ErrorMsg.WRONG_ERROR"));
-       showError(nextProps.errorStatus);
+      showError(nextProps.errorStatus);
       this.setState({ loading: false });
     }
     if (
@@ -83,7 +74,7 @@ class ChangePassword extends Component {
           newPassword: formProps.newPassword,
           isBackOfficeUser: this.isBackOffice ? true : false,
         };
-        // console.log(formData);
+
         this.props.dispatch(confirmForgottenPassword(formData));
         this.setState({ loading: true });
       }
@@ -104,7 +95,7 @@ class ChangePassword extends Component {
       }
     }
   };
-  validateConfirmCode = e => {
+  validateConfirmCode = (e) => {
     if (e.target.value.length <= 20) {
       this.setState({
         validateConfirmCode: true,
@@ -206,28 +197,28 @@ class ChangePassword extends Component {
                         />
                       </FormGroup>
                     ) : (
-                        <FormGroup>
-                          <AvField
-                            name="oldPassword"
-                            tag={Field}
-                            component={renderTextField}
-                            label={this.props.t("ChangePassword.OLD_PASS")}
-                            type="password"
-                            minLength={3}
-                            maxLength={14}
-                            onChange={(e) => this.validatePassword(e)}
-                            validate={{
-                              required: {
-                                value: true,
-                                errorMessage: this.props.t(
-                                  "ErrorMsg.OLD_PASSWORD_ERROR"
-                                ),
-                              },
-                            }}
-                            required
-                          />
-                        </FormGroup>
-                      )}
+                      <FormGroup>
+                        <AvField
+                          name="oldPassword"
+                          tag={Field}
+                          component={renderTextField}
+                          label={this.props.t("ChangePassword.OLD_PASS")}
+                          type="password"
+                          minLength={3}
+                          maxLength={14}
+                          onChange={(e) => this.validatePassword(e)}
+                          validate={{
+                            required: {
+                              value: true,
+                              errorMessage: this.props.t(
+                                "ErrorMsg.OLD_PASSWORD_ERROR"
+                              ),
+                            },
+                          }}
+                          required
+                        />
+                      </FormGroup>
+                    )}
                     <FormGroup>
                       <AvField
                         name="newPassword"
@@ -276,7 +267,6 @@ ChangePassword = reduxForm({
   // asyncValidate,
 })(ChangePassword);
 function mapStateToProps(state) {
-  console.log(state.Account.changePasswordData)
   return {
     isRedirect: state.Account.isRedirect,
     changePasswordData: state.Account.changePasswordData,

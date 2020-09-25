@@ -1,14 +1,11 @@
-import React, { Fragment, Component } from "react";
-import { reduxForm, Field, change } from "redux-form";
+import React, { Fragment } from "react";
+import { reduxForm} from "redux-form";
 import { translate } from "react-multi-lang";
 import { connect } from "react-redux";
 import compose from "compose-function";
 import { withRouter } from "react-router-dom";
 import {
-  showSuccess,
   showError,
-  required,
-  EMAIL_REGEX,
   dateTimeFormat,
   getLangBasedDataLabel,
   getLangBasedStationLabel,
@@ -19,8 +16,7 @@ import {
   getTicketAttachment,
   getClaimAttachment,
 } from "../../../actions/claimAction";
-import queryString from "query-string";
-import { Button, Row, Col, Label, Card, CardBody, Container } from "reactstrap";
+import { Button, Row, Col, Card, CardBody, Container } from "reactstrap";
 const ref = React.createRef();
 
 class PrintModal extends React.Component {
@@ -29,8 +25,6 @@ class PrintModal extends React.Component {
     this.state = {
       modal: false,
     };
-    //window.location.reload();
-    //this.toggle = this.toggle.bind(this);
   }
 
   componentDidMount = () => {
@@ -76,13 +70,11 @@ class PrintModal extends React.Component {
         nextProps.ClaimAttachmentData.attachment !== ""
       ) {
         this.setState({
-          ClaimAttachmentData:
-            // nextProps.ClaimAttachmentData.attachment !== "" &&
-            nextProps.ClaimAttachmentData.attachment
-              ? getFileExtension(
-                  nextProps.ClaimAttachmentData.attachment.slice(0, 5)
-                ) + nextProps.ClaimAttachmentData.attachment
-              : false,
+          ClaimAttachmentData: nextProps.ClaimAttachmentData.attachment
+            ? getFileExtension(
+                nextProps.ClaimAttachmentData.attachment.slice(0, 5)
+              ) + nextProps.ClaimAttachmentData.attachment
+            : false,
         });
         setTimeout(
           function() {
@@ -129,7 +121,6 @@ class PrintModal extends React.Component {
             </span>
             <span>
               <strong>{this.props.t("ClaimStatus.SENT_MESSAGE")}</strong>:
-              {/* {data ? data.sentMessage : ""} */}
               <div
                 dangerouslySetInnerHTML={{
                   __html: data ? data.sentMessage : "",
@@ -145,10 +136,8 @@ class PrintModal extends React.Component {
     window.print();
   };
   render() {
-    // console.log(this.props.initialValues);
-    const { handleSubmit } = this.props;
     const claimData = this.state.claimData;
-    console.log(ref);
+
     return (
       <Fragment>
         <div style={{ marginTop: "9vh" }}>
@@ -159,12 +148,6 @@ class PrintModal extends React.Component {
                   this.callClaimAttachment(claimData.code);
                 }}
               >
-                {/* <Col className='col-md-4 mx-auto rtl-txt-right '>
-                    <Button className='btn btn-b status-btn-width p-3 '>
-                      {" "}
-                      {this.props.t("ClaimStatus.VIEW_DETAILS")}
-                    </Button>
-                  </Col> */}
                 <Col className="col-md-6">
                   <div className="pl-3">
                     <p>
@@ -189,32 +172,6 @@ class PrintModal extends React.Component {
                     {/* {this.props.t("Claim.PRINT_DOCUMENT")} */}
                   </Button>
                 </Col>
-                {/* <Col className='col-md-4 mx-auto rtl-txt-right'>
-                    {claimData.claimStatus === "1" && (
-                      <button className='btn btn-submitted btn-pill float-right status-btn-width p-3'>
-                        {" "}
-                        {this.props.t("ClaimStatus.SUBMITTED")}{" "}
-                      </button>
-                    )}
-                    {claimData.claimStatus === "2" && (
-                      <button className='btn btn-progress btn-pill float-right status-btn-width p-3'>
-                        {" "}
-                        {this.props.t("ClaimStatus.PROGRESS")}{" "}
-                      </button>
-                    )
-                    {claimData.claimStatus === "3" && (
-                      <button className='btn btn-accepted btn-pill float-right status-btn-width p-3'>
-                        {" "}
-                        {this.props.t("ClaimStatus.APPROVE")}{" "}
-                      </button>
-                    )}
-                    {claimData.claimStatus === "4" && (
-                      <button className='btn btn-rejected btn-pill float-right status-btn-width p-3'>
-                        {" "}
-                        {this.props.t("ClaimStatus.REJECT")}{" "}
-                      </button>
-                    )}
-                  </Col> */}
               </Row>
             </Container>
             <Container className="pb-2">
@@ -318,33 +275,7 @@ class PrintModal extends React.Component {
                           {this.props.t("ClaimDetails.DOWNLOAD_ATTACH")}
                         </a>
                         <br />
-                        {/* {this.state.ClaimAttachmentData && (
-                          <a
-                            // id="linkId"
-                            target={"_blank"}
-                            href={
-                              this.state.ClaimAttachmentData
-                                ? this.state.ClaimAttachmentData
-                                : "#"
-                            }
-                            download={"Claim_Attachment"}
-                          >
-                            <i class="fas fa-file-download"></i>
-                            {"  "}
-                            {this.props.t("ClaimDetails.DOWNLOAD_CLAIM_ATTACH")}
-                          </a>
-                        )} */}
 
-                        {/* {!claimData.isAnswered && (
-                          <a
-                            href="javscript:void(0)"
-                            onClick={() => this.showAttchmentButton(key)}
-                          >
-                            <i class="fas fa-edit"></i>{" "}
-                            {this.props.t("Common.MODIFY")}
-                          </a>
-                        )} */}
-                        {/* // eslint-disable-next-line jsx-a11y/anchor-has-content */}
                         <a
                           id="linkId"
                           href={
@@ -383,21 +314,8 @@ class PrintModal extends React.Component {
                     </p>
                   </Col>
                   <br />
-
-                  {/* <Col md={12}>
-                    {claimData && claimData.claimStatus === "4" && (
-                      <Button
-                        id="printbtn-y"
-                        className="btn btn-primary mt-2"
-                        onClick={(e) => this.updateClaim(claimData.code)}
-                      >
-                        {this.props.t("Common.MODIFICATON")}
-                      </Button>
-                    )}
-                  </Col> */}
                 </Row>
 
-                {/* CLAIM COOMUNICATION */}
                 <br />
                 <Row>
                   {" "}
@@ -427,7 +345,6 @@ PrintModal = reduxForm({
   // asyncValidate,
 })(PrintModal);
 function mapStateToProps(state) {
-  // console.log(state.Account.updateMessage);
   return {
     getTicketAttachmentData: state.Claim.getTicketAttachmentData,
     getTicketAttachmentNetworkErrorStatus:

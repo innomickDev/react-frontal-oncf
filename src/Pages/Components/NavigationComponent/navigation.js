@@ -1,9 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { withRouter, NavLink } from "react-router-dom";
-// import { LANG_CODES } from "../../../utils";
-import PropTypes from "prop-types";
 import mainLogo from "../../../assets/img/svg/LOGO-W.svg";
-import { reduxForm, Field } from "redux-form";
 import { translate } from "react-multi-lang";
 import { connect } from "react-redux";
 import compose from "compose-function";
@@ -21,16 +18,10 @@ import {
   DropdownMenu,
   DropdownItem,
 } from "reactstrap";
-import language from "react-syntax-highlighter/dist/esm/languages/prism/css";
-import { showSuccess, showError, required } from "../../Helpers/utils";
+import { showSuccess} from "../../Helpers/utils";
 import {
   Link,
-  DirectLink,
-  Element,
-  Events,
   animateScroll as scroll,
-  scrollSpy,
-  scroller,
 } from "react-scroll";
 const LANG_CODES = {
   french: "fr-FR",
@@ -64,7 +55,6 @@ class NavigationBar extends Component {
       }
 
     } else {
-      console.log(localStorage.getItem("lang"));
       localStorage.setItem("lang", "fr-FR");
       localStorage.setItem("langName", "Français");
       document.getElementById("activeLang").innerHTML = "Français";
@@ -73,7 +63,7 @@ class NavigationBar extends Component {
 
   // Scroll to top
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps);
+    
     const {
       location,
       history: { action },
@@ -83,19 +73,7 @@ class NavigationBar extends Component {
       window.scrollTo(0, 0);
     }
 
-    // logout
-    // if (
-    //   nextProps.logoutSuccess &&
-    //   nextProps.logoutSuccess !== this.props.logoutSuccess
-    // ) {
-    // }
-
-    // if (
-    //   nextProps.logoutError &&
-    //   nextProps.logoutError !== this.props.logoutError
-    // ) {
-    //   showError(nextProps.logoutError);
-    // }
+   
   }
   /**
    * call this function to close the popup
@@ -124,7 +102,6 @@ class NavigationBar extends Component {
     localStorage.removeItem("claimData");
     localStorage.removeItem("claimId");
     this.props.history.push("/frontOffice/home");
-    // showSuccess(this.props.t("Common.LOGOUT_MSG"));
   };
   // setting laguage on click
   setLang = (langCode, langName) => {
@@ -138,7 +115,6 @@ class NavigationBar extends Component {
     }
     localStorage.setItem("lang", langCode);
     localStorage.setItem("langName", langName);
-    //window.location.reload();
     window.location.reload();
   };
   render() {
@@ -150,13 +126,8 @@ class NavigationBar extends Component {
       ? JSON.parse(localStorage.getItem("foUserProfile")).data
       : null;
 
-    // const serverDEVURL = "https://oncf-2255.azurewebsites.net/";
-    // const localServerURL = "http://localhost:3000/";
-    // const productionServerURL = "https://192.230.230.221/";
+    
     const showLinks =
-      // window.location.href === serverDEVURL ||
-      // window.location.href === productionServerURL ||
-      // window.location.href === localServerURL ||
       window.location.href.includes("login");
 
     return (
@@ -183,16 +154,7 @@ class NavigationBar extends Component {
               >
                 {!showLinks && (
                   <NavItem>
-                    {/* <Link
-                      activeClass="active"
-                      className="nav-link"
-                      to="home"
-                      spy={true}
-                      smooth={true}
-                      duration={500}
-                    >
-                      {this.props.t("Navigation.HOME")}
-                    </Link> */}
+                    
 
                     <Link
                       activeClass="active"
@@ -285,13 +247,7 @@ class NavigationBar extends Component {
                     </span>
                   </DropdownToggle>
                   <DropdownMenu right>
-                    {/* <DropdownItem
-                      onClick={() =>
-                        this.setLang("en-US", this.props.t("Navigation.EN"))
-                      }
-                    >
-                      {this.props.t("Navigation.EN")}
-                    </DropdownItem> */}
+                    
                     <DropdownItem
                       onClick={() =>
                         this.setLang("fr-FR", this.props.t("Navigation.FR"))
@@ -311,7 +267,7 @@ class NavigationBar extends Component {
                 {userProfile ? (
                   <UncontrolledDropdown nav inNavbar>
                     <DropdownToggle nav caret>
-                      {/* {this.props.t("Navigation.PROFILE")} */}
+
                       {userData.prenom + " " + userData.nom}
                     </DropdownToggle>
                     <DropdownMenu right>
@@ -332,7 +288,7 @@ class NavigationBar extends Component {
                 ) : (
                     ""
                   )}
-                {/* </NavItem> */}
+                
               </Nav>
             </Collapse>
           </Container>
@@ -342,11 +298,8 @@ class NavigationBar extends Component {
   }
 }
 function mapStateToProps(state) {
-  // console.log(state);
   return {
     profileData: state.Login.profileData,
-    // logoutSuccess: state.Account.logoutSuccess,
-    // logoutError: state.Account.logoutError,
   };
 }
 export default compose(

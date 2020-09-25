@@ -14,7 +14,7 @@ import {
   // AvCheckboxGroup,
   // AvCheckbox
 } from "availity-reactstrap-validation";
-import FormInput from "../../Common/FormInput";
+
 import SubmitBtnLoader from "../../Common/ButtonLoader";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 import moment from "moment";
@@ -23,16 +23,12 @@ import {
   Col,
   Row,
   Card,
-  CardBody,
   CardHeader,
   FormGroup,
   Label,
-  Input,
-  Form,
   Button,
   FormText,
 } from "reactstrap";
-import Logo from "../../../assets/img/svg/LOGO.svg";
 import DatePickerComponent from "../../Common/Datepicker";
 import { addClaim } from "../../../actions/claimAction";
 import { getStations } from "../../../actions/stationAction";
@@ -45,12 +41,10 @@ import {
   getBase64,
   getLangBasedItems,
   getLangBasedStations,
-  PHONE_REGEX,
 } from "../../Helpers/utils";
 import _ from "lodash";
-import Footer from "../HomeComponent/Footer";
+
 import MainLoader from "../../Common/Loader";
-import { parseJSON } from "date-fns";
 
 class ClaimComponent extends Component {
   constructor(props) {
@@ -79,7 +73,7 @@ class ClaimComponent extends Component {
         mainLoader: false,
       });
     }
-    
+
     if (
       nextProps.getCategoriesData &&
       nextProps.getCategoriesData !== this.props.getCategoriesData
@@ -90,27 +84,21 @@ class ClaimComponent extends Component {
       });
     }
 
-    
     if (
       nextProps.subCategoryDataByCategory &&
       nextProps.subCategoryDataByCategory !==
-      this.props.subCategoryDataByCategory
+        this.props.subCategoryDataByCategory
     ) {
-      console.log(nextProps.subCategoryDataByCategory.length)
-      console.log(nextProps.subCategoryDataByCategory)
-      
-        this.setState({
-          subCategoryDataByCategory: nextProps.subCategoryDataByCategory,
-          mainLoader: false,
-        });
-     
-     
+      this.setState({
+        subCategoryDataByCategory: nextProps.subCategoryDataByCategory,
+        mainLoader: false,
+      });
     }
-   
+
     if (
       nextProps.subSubCategoryDataBySubCategory &&
       nextProps.subSubCategoryDataBySubCategory !==
-      this.props.subSubCategoryDataBySubCategory
+        this.props.subSubCategoryDataBySubCategory
     ) {
       this.setState({
         subSubCategoryDataBySubCategory:
@@ -160,14 +148,12 @@ class ClaimComponent extends Component {
         loading: false,
       });
       showError(nextProps.addClaimDataError);
-      // showError(this.props.t("ErrorMsg.NO_DATA_ADDED"));
     }
     if (
       nextProps.subCategoryDataByCategoryError &&
       nextProps.subCategoryDataByCategoryError !==
-      this.props.subCategoryDataByCategoryError
+        this.props.subCategoryDataByCategoryError
     ) {
-      // showError(this.props.t("ErrorMsg.NO_SUB_CATEGORY"));
       this.setState({
         loading: false,
       });
@@ -176,7 +162,6 @@ class ClaimComponent extends Component {
       nextProps.subSubCategoryError &&
       nextProps.subSubCategoryError !== this.props.subSubCategoryError
     ) {
-      // showError(this.props.t("ErrorMsg.NO_SUB_SUB_CATEGORY"));
       this.setState({
         loading: false,
       });
@@ -184,7 +169,6 @@ class ClaimComponent extends Component {
   };
   /*call this function to show list stations(depatcher and arrival) */
   showStations = (data) => {
-    // console.log(data);
     if (data && data.length) {
       return data.map((station, key) => {
         return (
@@ -195,13 +179,9 @@ class ClaimComponent extends Component {
       });
     }
   };
-  getDepatureStationId = (e) => {
-    // console.log(e.target.value);
-  };
+  getDepatureStationId = (e) => {};
   /*common function to show categories */
   showOptions = (data) => {
-    console.log(data);
-    console.log(data && data.length)
     if (data && data.length) {
       return data.map((categories, key) => {
         return (
@@ -211,7 +191,6 @@ class ClaimComponent extends Component {
         );
       });
     }
-    
   };
   // get sub category by categoryID
   getSubCategoriesByCategory = (e) => {
@@ -220,13 +199,13 @@ class ClaimComponent extends Component {
         code: e.target.value,
       });
       this.setState({ showSubSubCategory: category.isRequiredSubSubCategory });
-      // console.log(category);
+
       this.props.dispatch(getSubCategories(e.target.value));
-        // this.getSubSubCategoryBYSubCategory(e);
-        this.setState({
-          subCategoryDataByCategory:[],
-          subSubCategoryDataBySubCategory:[]
-        })
+
+      this.setState({
+        subCategoryDataByCategory: [],
+        subSubCategoryDataBySubCategory: [],
+      });
     } else {
       this.setState({
         getSubCategoriesByCategory: [],
@@ -235,16 +214,15 @@ class ClaimComponent extends Component {
   };
   //get Sub Sub-Category BY SubCategoryID
   getSubSubCategoryBYSubCategory = (e) => {
-    if(e.target.event !== "0") {
-          this.props.dispatch(getSubSubCategories(e.target.value));
-          this.setState({
-            subSubCategoryDataBySubCategory:[]
-          })
-
-      } else {
-        this.setState({
-            getSubSubCategoryBYSubCategory: []
-        });
+    if (e.target.event !== "0") {
+      this.props.dispatch(getSubSubCategories(e.target.value));
+      this.setState({
+        subSubCategoryDataBySubCategory: [],
+      });
+    } else {
+      this.setState({
+        getSubSubCategoryBYSubCategory: [],
+      });
     }
   };
 
@@ -293,13 +271,11 @@ class ClaimComponent extends Component {
   };
 
   getselectedData = (props) => {
-    // console.log(props);
     this.setState({ selectedDate: props });
   };
 
   // Managing page
   nextPage = (formProps) => {
-    console.log(formProps);
     const selectedDate = `${moment(
       new Date(this.state.selectedDate).getTime()
     )}`;
@@ -309,9 +285,6 @@ class ClaimComponent extends Component {
       formProps.departureStation &&
       formProps.arrivalStation &&
       formProps.trainNumber
-      // PHONE_REGEX.test(formProps.trainNumber.trim()) &&
-      // selectedDate &&
-      // this.state.currentTicketPath
     ) {
       this.setState({
         showPageOne: false,
@@ -327,22 +300,18 @@ class ClaimComponent extends Component {
   };
 
   onSubmit = (formProps) => {
-    console.log(formProps, formProps.isFinalPage);
     if (formProps.isFinalPage) {
       const userProfile = JSON.parse(localStorage.getItem("foUserProfile"));
-      console.log(userProfile);
+
       const selectedDate = this.state.selectedDate
         ? this.state.selectedDate
         : new Date();
 
-      console.log(selectedDate);
       if (
         formProps.values.arrivalStation === formProps.values.departureStation
       ) {
         showError(this.props.t("Claim.PAGE_ALERT"));
       } else {
-        // const currentDate = new Date();
-        console.log("test");
         if (
           formProps.values.departureStation &&
           formProps.values.arrivalStation &&
@@ -362,9 +331,7 @@ class ClaimComponent extends Component {
             arrivalStationCode: formProps.values.arrivalStation
               ? formProps.values.arrivalStation
               : null,
-            // travelDate: selectedDate
-            //   ? selectedDate
-            //   : String(currentDate.getTime()),
+
             travelDate: `${moment(new Date(selectedDate).getTime())}`,
             trainNumber: formProps.values.trainNumber,
             ticketAttachment: this.state.currentTicketPath
@@ -387,8 +354,6 @@ class ClaimComponent extends Component {
             claimData.subSubCategoryCode = formProps.values.subSubCategory;
           }
 
-          console.log(claimData);
-          // localStorage.setItem("claimData", JSON.stringify(claimData));
           this.props.dispatch(addClaim(claimData));
           this.setState({ loading: true });
         } else {
@@ -397,7 +362,6 @@ class ClaimComponent extends Component {
         }
       }
     } else {
-      console.log(formProps, "test two");
       const selectedDate = this.state.selectedDate
         ? this.state.selectedDate
         : new Date();
@@ -420,13 +384,10 @@ class ClaimComponent extends Component {
         showError(this.props.t("ErrorMsg.TEXT_ONLY"));
       }
     }
-    // const yesterday = moment(new Date()).subtract(1, "day");
   };
 
   render() {
-    // console.log(this.state.currentTicketPath);
-    // console.log(this.state.currentClaimPath);
-    const { handleSubmit, pristine, submitting } = this.props;
+    const { handleSubmit } = this.props;
     const Checkbox = ({ input, meta: { touched, error } }) => (
       <div style={{ border: touched && error ? "1px solid red" : "none" }}>
         <input type="checkbox" {...input} />
@@ -461,18 +422,8 @@ class ClaimComponent extends Component {
                   <p className="text-center mt-1">
                     {this.props.t("Claim.PROCESS_CLAIM")}
                   </p>
-                  {/* <div className="text-center">
-                  <h6 className="text-light d-bg p-3 m-3 font-weight-bold rounded">
-                    {this.props.t("Claim.CLAIM_HEADER")}
-                  </h6>
-                  <p>{this.props.t("Claim.PROCESS_CLAIM")}</p>
-                </div> */}
-                  <AvForm
-                    className=""
-                    noValidate
-                  // onSubmit={handleSubmit(this.onSubmit)}
-                  // model={this.props.initialValues}
-                  >
+
+                  <AvForm className="" noValidate>
                     <Row>
                       {/* Page 1 */}
                       {this.state.showPageOne && (
@@ -490,7 +441,6 @@ class ClaimComponent extends Component {
                                 placeholder={""}
                                 className="form-control"
                                 onChange={(e) => this.getDepatureStationId(e)}
-                              // validate={[required]}
                               >
                                 <option value="">
                                   {this.props.t("Claim.PLEASE_SELECT_STN")}
@@ -498,8 +448,8 @@ class ClaimComponent extends Component {
                                 {this.showStations(
                                   this.state.stationList
                                     ? getLangBasedStations(
-                                      this.state.stationList.listGare
-                                    )
+                                        this.state.stationList.listGare
+                                      )
                                     : null
                                 )}
                               </Field>
@@ -515,7 +465,6 @@ class ClaimComponent extends Component {
                                 component={renderSelectField}
                                 placeholder={""}
                                 className="form-control"
-                              // validate={[required]}
                               >
                                 <option value="">
                                   {this.props.t("Claim.PLEASE_SELECT_STN")}
@@ -523,8 +472,8 @@ class ClaimComponent extends Component {
                                 {this.showStations(
                                   this.state.stationList
                                     ? getLangBasedStations(
-                                      this.state.stationList.listGare
-                                    )
+                                        this.state.stationList.listGare
+                                      )
                                     : null
                                 )}
                               </Field>
@@ -544,12 +493,7 @@ class ClaimComponent extends Component {
                                       "ErrorMsg.TRAIN_NUMBER_ERROR"
                                     ),
                                   },
-                                  // pattern: {
-                                  //   value: "^[0-9]+$",
-                                  //   errorMessage: this.props.t(
-                                  //     "Common.ONLY_NUM"
-                                  //   ),
-                                  // },
+
                                   maxLength: {
                                     value: 10,
                                   },
@@ -560,16 +504,9 @@ class ClaimComponent extends Component {
                               <Label for="examplePassword">
                                 {this.props.t("Claim.TRAVEL_DATE_TIME")}
                               </Label>
-                              {/* <Field
-                            name="travelTime"
-                            //tag={Field}
-                            component={DatePickerComponent}
-                            label={"Travel date and time*"}
-                            type="text"
-                          /> */}
+
                               <DatePickerComponent
                                 getselectedData={this.getselectedData}
-                              // defaultValue={new Date("10/10/1990")}
                               />
                             </FormGroup>
                             <FormGroup>
@@ -610,9 +547,7 @@ class ClaimComponent extends Component {
                             <Button
                               color="btn btn-lg btn-primary px-5 btn-pill"
                               className="btn btn-lg btn-primary  p-3 home-btn-width btn-pill"
-                              // onClick={(e) => this.nextPage(e)}
                               type="submit"
-                              // disabled={pristine || submitting}
                               onClick={handleSubmit((values) =>
                                 this.onSubmit({
                                   values,
@@ -651,10 +586,9 @@ class ClaimComponent extends Component {
                                 {this.showOptions(
                                   this.state.getCategoriesData
                                     ? getLangBasedItems(
-                                     
-                                      this.state.getCategoriesData
-                                        .categoryClients
-                                    )
+                                        this.state.getCategoriesData
+                                          .categoryClients
+                                      )
                                     : null
                                 )}
                               </Field>
@@ -677,18 +611,13 @@ class ClaimComponent extends Component {
                                 <option value="0">
                                   {this.props.t("Category.S_SUB_CATEGORY")}
                                 </option>
-                                {/* {this.showOptions(
-                        this.state.subCategoryDataByCategory
-                          ? this.state.subCategoryDataByCategory
-                          : null
-                      )} */}
+
                                 {this.showOptions(
                                   this.state.subCategoryDataByCategory
                                     ? getLangBasedItems(
-                                     
-                                      this.state.subCategoryDataByCategory
-                                        .subCategoryClients
-                                    )
+                                        this.state.subCategoryDataByCategory
+                                          .subCategoryClients
+                                      )
                                     : null
                                 )}
                               </Field>
@@ -713,10 +642,10 @@ class ClaimComponent extends Component {
                                   {this.showOptions(
                                     this.state.subSubCategoryDataBySubCategory
                                       ? getLangBasedItems(
-                                        this.state
-                                          .subSubCategoryDataBySubCategory
-                                          .subSubCategoryClients
-                                      )
+                                          this.state
+                                            .subSubCategoryDataBySubCategory
+                                            .subSubCategoryClients
+                                        )
                                       : ""
                                   )}
                                 </Field>
@@ -762,7 +691,6 @@ class ClaimComponent extends Component {
                                   </span>
                                 </label>
                                 <input
-                                  //component={CustomInput}
                                   type="file"
                                   name="updateClaim"
                                   id="updateClaim"
@@ -840,7 +768,6 @@ ClaimComponent = reduxForm({
   form: "RegisterForm",
 })(ClaimComponent);
 function mapStateToProps(state) {
-  // console.log(state.Station.stationList);
   return {
     stationList: state.Station.stationList,
     // initialValues: JSON.parse(localStorage.getItem("trainDetails")),

@@ -1,7 +1,6 @@
 import React, { Fragment, Component } from "react";
 import { Row, Col } from "reactstrap";
 import { translate } from "react-multi-lang";
-import { connect } from "react-redux";
 import compose from "compose-function";
 import { withRouter } from "react-router-dom";
 
@@ -20,7 +19,6 @@ class FooterComponent extends Component {
               <Row className=" mx-auto">
                 <Col className="col-md-auto">
                   <div className="footer-pad">
-                    {/* <h4>Heading 1</h4> */}
                     <ul className="list-unstyled">
                       <li>
                         <a href="javascript:void(0);">
@@ -98,7 +96,6 @@ class FooterComponent extends Component {
                   </div>
                 </Col>
                 <Col className="col-md-auto d-inline-flex">
-                  {/* <span>{this.props.t("Home.FOLLOW_US_ON")}</span> */}
                   <ul className="social-network social-circle">
                     <li>
                       <a

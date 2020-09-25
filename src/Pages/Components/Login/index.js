@@ -19,9 +19,8 @@ import { AvForm, AvField } from "availity-reactstrap-validation";
 import { renderTextField } from "../../Common/RenderTextField";
 import Logo from "../../../assets/img/svg/LOGO-W.svg";
 import SubmitBtnLoader from "../../Common/ButtonLoader";
-import FooterComponent from "../HomeComponent/Footer";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
-import { showSuccess, showError, EMAIL_REGEX } from "../../Helpers/utils";
+import { showError, EMAIL_REGEX } from "../../Helpers/utils";
 import { DEV_ENV_URL } from "../../Helpers/utils";
 const emailRex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
@@ -35,7 +34,6 @@ class Login extends Component {
     };
   }
 
- 
   componentWillReceiveProps = (nextProps, props) => {
     if (
       nextProps.isAuthenticated &&
@@ -52,13 +50,12 @@ class Login extends Component {
       } else {
         this.props.dispatch(myProfile());
         setTimeout(
-          function () {
+          function() {
             this.props.history.push("/frontOffice/home");
           }.bind(this),
           1000
         );
       }
-
     }
 
     if (
@@ -66,9 +63,8 @@ class Login extends Component {
       nextProps.loginErrorStatus !== this.props.loginErrorStatus
     ) {
       this.setState({ isAuthenticating: false });
-      //showError(nextProps.loginErrorStatus);
-      if (nextProps.loginErrorStatus == 8 ||nextProps.loginErrorStatus == 9) {
-        // showError(this.props.t("Common.UNLOCK_ACCOUNT_ERROR"));
+
+      if (nextProps.loginErrorStatus == 8 || nextProps.loginErrorStatus == 9) {
         showError(nextProps.loginErrorStatus);
         this.props.history.push("/frontOffice/unlock-account");
       } else {
@@ -78,52 +74,6 @@ class Login extends Component {
         loading: false,
       });
     }
-
-
-    // if (
-    //   nextProps.loginErrorStatus &&
-    //   nextProps.loginErrorStatus !== this.props.loginErrorStatus
-    // ) {
-    //   // this.setState({ isAuthenticating: false });
-    //   // //showError(nextProps.loginErrorStatus);
-    //   // showError(this.props.t("Common.AUTH_ERROR"));
-    //   // this.setState({
-    //   //   loading: false,
-    //   // });
-    //   // if (
-    //   //   nextProps.loginErrorCode &&
-    //   //   nextProps.loginErrorCode !== this.props.loginErrorCode
-    //   // ) {
-    //     if(nextProps.loginErrorCode ==8)
-    //     {
-    //       this.setState({ isAuthenticating: false }); 
-    //       showError(this.props.t("Common.UNLOCK_ACCOUNT_ERROR"));
-    //       this.setState({
-    //         loading: false,
-    //       });
-    //       this.props.history.push("/frontOffice/unlock-account");
-    //     }
-    //     else {
-    //       this.setState({ isAuthenticating: false });
-    //       //showError(nextProps.loginErrorStatus);
-    //       showError(this.props.t("Common.AUTH_ERROR"));
-    //       this.setState({
-    //         loading: false,
-    //       });
-    //     }
-      
-    // }
-
-    
-    // if (
-    //   nextProps.loginNetworkErrorStatus &&
-    //   nextProps.loginNetworkErrorStatus !== this.props.loginNetworkErrorStatus
-    // ) {
-    //   showError(nextProps.loginNetworkErrorStatus);
-    //   this.setState({
-    //     loading: false,
-    //   });
-    // }
   };
 
   onSubmit = (formProps) => {
@@ -304,7 +254,6 @@ class Login extends Component {
             </Container>
           </section>
         </ReactCSSTransitionGroup>
-        {/* <FooterComponent /> */}
       </Fragment>
     );
   }
@@ -315,7 +264,6 @@ Login = reduxForm({
   // asyncValidate,
 })(Login);
 function mapStateToProps(state) {
-  console.log(state.Login.loginErrorStatus);
   return {
     success: true,
     isAuthenticated: state.Login.isAuthenticated,
@@ -325,8 +273,8 @@ function mapStateToProps(state) {
     loginData: state.Login.loginData,
     // loginNetworkErrorStatus: state.Login.loginNetworkErrorStatus,
     loginErrorStatus: state.Login.loginErrorStatus,
-    loginErrorCode:state.Login.loginErrorCode,
-    loginErrorDescription:state.Login.loginErrorDescription,
+    loginErrorCode: state.Login.loginErrorCode,
+    loginErrorDescription: state.Login.loginErrorDescription,
     // loginNetworkError: state.Login.loginNetworkError,
   };
 }

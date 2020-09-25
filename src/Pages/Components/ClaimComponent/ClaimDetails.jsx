@@ -1,18 +1,9 @@
 import React, { Fragment } from "react";
-import {
-  Row,
-  Col,
-  Card,
-  CardBody,
-  Container,
-  Button,
-  CardHeader,
-} from "reactstrap";
+import { Row, Col, Card, Container, Button, CardHeader } from "reactstrap";
 import ClaimResult from "../../../assets/img/svg/claim-result.svg";
 import CheckSign from "../../../assets/img/svg/check-mark.svg";
 import {
   dateTimeFormat,
-  getLangBasedItem,
   getLangBasedStationLabel,
   showError,
   getLangBasedDataLabel,
@@ -21,10 +12,8 @@ import { translate } from "react-multi-lang";
 import { connect } from "react-redux";
 import compose from "compose-function";
 import { withRouter } from "react-router-dom";
-import { reduxForm, Field } from "redux-form";
+import { reduxForm } from "redux-form";
 import { getClaimsDetailsById } from "../../../actions/claimAction";
-import LoaderComponent from "../../Common/LoaderComponent";
-import Footer from "../HomeComponent/Footer";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 import MainLoader from "../../Common/Loader";
 const claimId = localStorage.getItem("claimId");
@@ -47,7 +36,6 @@ class ClaimDetails extends React.Component {
   };
 
   componentDidMount = () => {
-    console.log(this.props.match.params);
     this.props.dispatch(getClaimsDetailsById(this.props.match.params.id));
   };
   componentWillReceiveProps = (nextProps) => {
@@ -75,7 +63,7 @@ class ClaimDetails extends React.Component {
     const getClaimsDataById = this.state.getClaimsDataById
       ? this.state.getClaimsDataById
       : null;
-    // console.log(getClaimsDataById);
+
     const claimData = JSON.parse(localStorage.getItem("claimData"));
     return (
       <Fragment>
@@ -88,23 +76,13 @@ class ClaimDetails extends React.Component {
           transitionLeave={false}
         >
           <MainLoader className="text-center" loading={this.state.loader} />
-          {/* {this.state.loader && <LoaderComponent />} */}
 
           <Container fluid className="claim-block c-h claim-bg">
             <Row className="">
               <Col md={6} className="mx-auto">
                 <Card className="claim-card card-shadow claim-details-rtl">
-                  {/* <CardBody> */}
                   <CardHeader className="c-header">
                     <Row className="text-center w-100 text-light">
-                      {/* <Col md={3} className=''>
-                        <i
-                          className='float-left fas fa-arrow-circle-left fa-2x py-3'
-                          title='Back'
-                          onClick={e => this.props.history.goBack()}
-                        ></i>
-                        &nbsp;
-                      </Col> */}
                       <Col md={12} className="mx-auto ">
                         <h5 className="pytext-canter-3  font-weight-bold">
                           {this.props.t("ClaimDetails.CLAIM_HEAD")}
@@ -176,7 +154,6 @@ class ClaimDetails extends React.Component {
                             <span className="font-weight-bold">
                               {this.props.t("ClaimDetails.TRAIN_N")}:
                             </span>{" "}
-                            {/* {claimData ? claimData.depatureStationId : ""} */}
                             {getClaimsDataById
                               ? getClaimsDataById.trainNumber
                               : ""}
@@ -185,7 +162,6 @@ class ClaimDetails extends React.Component {
                             <span className="font-weight-bold">
                               {this.props.t("ClaimDetails.DEPART_STN")}:
                             </span>{" "}
-                            {/* {claimData ? claimData.depatureStationId : ""} */}
                             {getClaimsDataById
                               ? getLangBasedStationLabel(
                                   getClaimsDataById.departureStation
@@ -196,7 +172,6 @@ class ClaimDetails extends React.Component {
                             <span className="font-weight-bold">
                               {this.props.t("ClaimDetails.ARRIV_STN")}:
                             </span>{" "}
-                            {/* {claimData ? claimData.arrivalStationId : ""} */}
                             {getClaimsDataById
                               ? getLangBasedStationLabel(
                                   getClaimsDataById.arrivalStation
@@ -224,9 +199,6 @@ class ClaimDetails extends React.Component {
                         </p>
                       </Card>
                       <br />
-                      {/* <Card className="p-3 bg-smoke">
-                        <h5>{this.props.t("ClaimDetails.ATTACHMENTS")}</h5>
-                      </Card> */}
                     </Col>
                   </div>
                   <div className="text-center mb-3">
@@ -239,7 +211,6 @@ class ClaimDetails extends React.Component {
                       {this.props.t("ClaimDetails.OK")}
                     </Button>
                   </div>
-                  {/* </CardBody> */}
                 </Card>
               </Col>
             </Row>
@@ -250,7 +221,6 @@ class ClaimDetails extends React.Component {
             </section>
           </Container>
         </ReactCSSTransitionGroup>
-        {/* <Footer /> */}
       </Fragment>
     );
   }
@@ -260,7 +230,6 @@ ClaimDetails = reduxForm({
   form: "mainForm",
 })(ClaimDetails);
 function mapStateToProps(state) {
-  console.log(state.Claim.getClaimsDataById);
   return {
     getClaimsDataById: state.Claim.getClaimsDataById,
     getClaimsDataError: state.Claim.getClaimsDataError,
